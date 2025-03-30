@@ -64,14 +64,32 @@
     </div>
 
     <script>
-      document.getElementById("no").addEventListener("mouseover", function () {
-        const button = this;
-        const randomX = (Math.random() * 20 + 20) * (Math.random() < 0.1 ? 1 : -1);
-        const randomY = (Math.random() * 20 + 20) * (Math.random() < 0.1 ? 1 : -1);
-        button.style.transform = `translate(${randomX}px, ${randomY}px)`;
-      });
+      let step = 0;
+      function moveButton() {
+        const button = document.getElementById("no");
+        let moveDistance = 50; // 3 cm dalam pixel (asumsi 1cm ≈ 10px)
 
-      // // Menghilangkan mute setelah halaman selesai dimuat
+        switch (step % 4) {
+          case 0:
+            button.style.transform = `translateX(-${moveDistance}px)`; // Ke kiri
+            break;
+          case 1:
+            button.style.transform = `translateX(${moveDistance}px)`; // Ke kanan
+            break;
+          case 2:
+            button.style.transform = `translateY(-${moveDistance}px)`; // Ke atas
+            break;
+          case 3:
+            button.style.transform = `translateY(${moveDistance}px)`; // Ke bawah
+            break;
+        }
+        step++;
+      }
+      
+      document.getElementById("no").addEventListener("mouseover", moveButton);
+      document.getElementById("no").addEventListener("click", moveButton);
+      
+      // Menghilangkan mute setelah halaman selesai dimuat
       window.addEventListener("load", function () {
         setTimeout(() => {
           let audio = document.getElementById("bg-music");
