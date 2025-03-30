@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Happy IED</title>
+    <title>Happy EID</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       body {
@@ -51,9 +51,16 @@
       }
 
       .responsive-video {
-        width: 100%;
+        width: 80%;
         max-width: 400px;
         height: auto;
+      }
+
+      .swal2-title {
+        font-size: 20px !important;
+      }
+      .swal2-html-container {
+        font-size: 14px !important;
       }
     </style>
   </head>
@@ -61,7 +68,10 @@
     <audio id="bg-music" src="song.mp3" autoplay loop muted></audio>
     
     <img src="cat2.png" alt="Cat" />
-    <h4>This cat wants to apologize?</h4>
+    <h5 style="text-align: justify; padding: 16px; margin: 8px;">
+      This cat is asking for forgiveness for any words or actions left unchecked. Please accept this heartfelt apology?
+  </h5>
+  
     <div class="row">
       <button id="yes">Yes</button>
       <button id="no">No</button>
@@ -100,8 +110,12 @@
         lastAudioTime = audio.currentTime; // Simpan posisi terakhir audio
         audio.pause(); // Hentikan musik
         Swal.fire({
-          title: "Happy IED! 😊",
-          html: '<video class="responsive-video" autoplay playsinline><source src="ui_cat.mp4" type="video/mp4">Your browser does not support the video tag.</video>',          showConfirmButton: false,
+          title: "Thank You, Happy Eid Mubarak!",
+          html: `<p>May this Eid bring even more brightness and joy to your life. 😊</p>
+                 <video class="responsive-video" autoplay playsinline>
+                 <source src="ui_cat.mp4" type="video/mp4">
+                 Your browser does not support the video tag.</video>`,
+          showConfirmButton: true,
           didClose: () => {
             audio.currentTime = lastAudioTime; // Kembalikan ke posisi terakhir
             audio.play(); // Lanjutkan pemutaran
