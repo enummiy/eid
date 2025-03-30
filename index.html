@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Happy IED</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       body {
         display: flex;
@@ -48,14 +49,11 @@
       button:hover {
         background-color: #1a5a6e;
       }
-      #no {
-        position: relative;
-      }
     </style>
   </head>
   <body>
-    <audio id="bg-music" src="song.mp3" autoplay loop load></audio>
-
+    <audio id="bg-music" src="song.mp3" autoplay loop muted></audio>
+    
     <img src="cat.jpg" alt="Cat" />
     <h4>This cat wants to apologize?</h4>
     <div class="row">
@@ -65,9 +63,12 @@
 
     <script>
       let step = 0;
+      let audio = document.getElementById("bg-music");
+      let lastAudioTime = 0;
+      
       function moveButton() {
         const button = document.getElementById("no");
-        let moveDistance = 50; // 3 cm dalam pixel (asumsi 1cm ≈ 10px)
+        let moveDistance = 30; // 3 cm dalam pixel (asumsi 1cm ≈ 10px)
 
         switch (step % 4) {
           case 0:
@@ -89,23 +90,27 @@
       document.getElementById("no").addEventListener("mouseover", moveButton);
       document.getElementById("no").addEventListener("click", moveButton);
       
+      document.getElementById("yes").addEventListener("click", function () {
+        lastAudioTime = audio.currentTime; // Simpan posisi terakhir audio
+        audio.pause(); // Hentikan musik
+        Swal.fire({
+          title: "Happy IED! 😊",
+          html: '<video width="400" height="300" autoplay playsinline><source src="ui_cat.mp4" type="video/mp4">Your browser does not support the video tag.</video>',
+          showConfirmButton: false,
+          didClose: () => {
+            audio.currentTime = lastAudioTime; // Kembalikan ke posisi terakhir
+            audio.play(); // Lanjutkan pemutaran
+          }
+        });
+      });
+      
       // Menghilangkan mute setelah halaman selesai dimuat
       window.addEventListener("load", function () {
         setTimeout(() => {
-          let audio = document.getElementById("bg-music");
           audio.muted = false;
           audio.play();
         }, 500);
       });
-
-      // Play music on user interaction to bypass autoplay restrictions
-      // document.addEventListener(
-      //   "click",
-      //   function () {
-      //     document.getElementById("bg-music").play();
-      //   },
-      //   { once: true }
-      // );
     </script>
   </body>
 </html>
