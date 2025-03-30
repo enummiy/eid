@@ -65,12 +65,12 @@
     </style>
   </head>
   <body>
-    <audio id="bg-music" src="song.mp3" autoplay loop load muted></audio>
-    
+    <audio id="bg-music" src="song.mp3" loop></audio>
+
     <img src="cat2.png" alt="Cat" />
     <h5 style="text-align: justify; padding: 16px; margin: 8px;">
       This cat is asking for forgiveness for any words or actions left unchecked. Please accept this heartfelt apology?
-  </h5>
+    </h5>
   
     <div class="row">
       <button id="yes">Yes</button>
@@ -84,20 +84,19 @@
       
       function moveButton() {
         const button = document.getElementById("no");
-        let moveDistance = 30; // 3 cm dalam pixel (asumsi 1cm ≈ 10px)
-
+        let moveDistance = 30;
         switch (step % 4) {
           case 0:
-            button.style.transform = `translateX(-${moveDistance}px)`; // Ke kiri
+            button.style.transform = `translateX(-${moveDistance}px)`;
             break;
           case 1:
-            button.style.transform = `translateX(${moveDistance}px)`; // Ke kanan
+            button.style.transform = `translateX(${moveDistance}px)`;
             break;
           case 2:
-            button.style.transform = `translateY(-${moveDistance}px)`; // Ke atas
+            button.style.transform = `translateY(-${moveDistance}px)`;
             break;
           case 3:
-            button.style.transform = `translateY(${moveDistance}px)`; // Ke bawah
+            button.style.transform = `translateY(${moveDistance}px)`;
             break;
         }
         step++;
@@ -107,8 +106,8 @@
       document.getElementById("no").addEventListener("click", moveButton);
       
       document.getElementById("yes").addEventListener("click", function () {
-        lastAudioTime = audio.currentTime; // Simpan posisi terakhir audio
-        audio.pause(); // Hentikan musik
+        lastAudioTime = audio.currentTime;
+        audio.pause();
         Swal.fire({
           title: "Thank You, Happy Eid Mubarak!",
           html: `<p>May this Eid bring even more brightness and joy to your life. 😊</p>
@@ -117,18 +116,24 @@
                  Your browser does not support the video tag.</video>`,
           showConfirmButton: true,
           didClose: () => {
-            audio.currentTime = lastAudioTime; // Kembalikan ke posisi terakhir
-            audio.play(); // Lanjutkan pemutaran
+            audio.currentTime = lastAudioTime;
+            audio.play();
           }
         });
       });
       
-      // Menghilangkan mute setelah halaman selesai dimuat
       window.addEventListener("load", function () {
-        setTimeout(() => {
-          audio.muted = false;
-          audio.play();
-        }, 500);
+        Swal.fire({
+          title: "Allow Music Playback?",
+          text: "Do you want to enable background music?",
+          icon: "question",
+          confirmButtonText: "Yes, play music",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            audio.muted = false;
+            audio.play();
+          }
+        });
       });
     </script>
   </body>
