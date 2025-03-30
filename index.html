@@ -49,12 +49,18 @@
       button:hover {
         background-color: #1a5a6e;
       }
+
+      .responsive-video {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+      }
     </style>
   </head>
   <body>
     <audio id="bg-music" src="song.mp3" autoplay loop muted></audio>
     
-    <img src="cat.jpg" alt="Cat" />
+    <img src="cat2.jpg" alt="Cat" />
     <h4>This cat wants to apologize?</h4>
     <div class="row">
       <button id="yes">Yes</button>
@@ -95,8 +101,7 @@
         audio.pause(); // Hentikan musik
         Swal.fire({
           title: "Happy IED! 😊",
-          html: '<video width="400" height="300" autoplay playsinline><source src="ui_cat.mp4" type="video/mp4">Your browser does not support the video tag.</video>',
-          showConfirmButton: false,
+          html: '<video class="responsive-video" autoplay playsinline><source src="ui_cat.mp4" type="video/mp4">Your browser does not support the video tag.</video>',          showConfirmButton: false,
           didClose: () => {
             audio.currentTime = lastAudioTime; // Kembalikan ke posisi terakhir
             audio.play(); // Lanjutkan pemutaran
